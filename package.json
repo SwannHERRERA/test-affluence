@@ -1,20 +1,34 @@
 {
-  "name": "koa-typescript-starter",
+  "name": "woc-scheduler",
   "version": "1.0.0",
-  "main": "dist/sever/server.js",
-  "license": "CC0-1.0",
+  "description": "application de lancement de la woc",
+  "main": "index.js",
+  "author": "Swann <swann@graines-octets.com>",
+  "license": "MIT",
+  "private": true,
   "scripts": {
-    "build-dev": "tsc -p . && nodemon dist/index.js"
+    "start": "node dist/index.js",
+    "build": "tsc -p .",
+    "build-dev": "tsc -p . && node dist/index.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "devDependencies": {
+    "@types/date-fns": "^2.6.0",
     "@types/koa": "^2.13.4",
     "@types/koa-router": "^7.4.4",
+    "@types/node": "^17.0.10",
+    "eslint": "^8.7.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-prettier": "^4.0.0",
     "nodemon": "^2.0.15",
+    "prettier": "^2.5.1",
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "axios": "0.26.1",
-    "date-fns": "2.28.0",
+    "axios": "^0.25.0",
+    "date-fns": "^2.28.0",
     "koa": "^2.13.4",
     "koa-router": "^10.1.1"
   }
