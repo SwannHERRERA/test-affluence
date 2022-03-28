@@ -1,0 +1,21 @@
+{
+  "name": "koa-typescript-starter",
+  "version": "1.0.0",
+  "main": "dist/sever/server.js",
+  "license": "CC0-1.0",
+  "scripts": {
+    "build-dev": "tsc -p . && nodemon dist/index.js"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.13.4",
+    "@types/koa-router": "^7.4.4",
+    "nodemon": "^2.0.15",
+    "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "axios": "0.26.1",
+    "date-fns": "2.28.0",
+    "koa": "^2.13.4",
+    "koa-router": "^10.1.1"
+  }
+}
