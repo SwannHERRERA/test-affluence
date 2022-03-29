@@ -5,32 +5,26 @@ import { TimeSlots } from "./time-slot";
 
 function isNotBetweenOtherReservation(
   reservations: TimeSlots,
-  instantOfReservation: number
+  instantOfReservation: Date
 ) {
-  reservations.timetable.forEach((resevation) => {
+  return reservations.timetable.every((resevation) => {
     const { start, end } = resevation;
-    const startDateTime = Date.parse(start);
-    const endDateTime = Date.parse(end);
-    if (isBetween(startDateTime, endDateTime, instantOfReservation)) {
-      return false;
-    }
+    const startDateTime = new Date(start);
+    const endDateTime = new Date(end);
+    return !isBetween(startDateTime, endDateTime, instantOfReservation);
   });
-  return true;
 }
 
-function isBetweenOpenningTimeSlot(
+function isNotBetweenOpenningTimeSlot(
   opennings: TimeSlots,
-  instantOfReservation: number
+  instantOfReservation: Date
 ): boolean {
-  opennings.timetable.forEach((openningClosing) => {
+  return opennings.timetable.every((openningClosing) => {
     const { start, end } = openningClosing;
-    const openingDateTime = Date.parse(start);
-    const closingDateTime = Date.parse(end);
-    if (isBetween(openingDateTime, closingDateTime, instantOfReservation)) {
-      return true;
-    }
+    const openingDateTime = new Date(start);
+    const closingDateTime = new Date(end);
+    return !isBetween(openingDateTime, closingDateTime, instantOfReservation);
   });
-  return false;
 }
 
 const router = new Router({ prefix: "/api" });
@@ -42,8 +36,8 @@ router.get("/is-available", async (ctx) => {
   const reservations = await getReservations(today, id);
 
   const { reservationDateTime } = ctx.request.query;
-  const instantOfReservation = Date.parse(reservationDateTime as string);
-  if (!isBetweenOpenningTimeSlot(opennings, instantOfReservation)) {
+  const instantOfReservation = new Date(reservationDateTime as string);
+  if (isNotBetweenOpenningTimeSlot(opennings, instantOfReservation)) {
     ctx.body = { avaiable: false };
     ctx.status = 200;
     return;
